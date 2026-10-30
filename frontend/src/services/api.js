@@ -1,5 +1,7 @@
-// Central API service — all backend calls go through here
-const BASE = '/api';
+// Central API service — points to deployed backend on Render (or local in dev)
+const BASE = import.meta.env.DEV
+  ? '/api'
+  : 'https://bookleaf-author-portal-5lp9.onrender.com/api';
 
 function getToken() {
   return localStorage.getItem('bookleaf_token');
