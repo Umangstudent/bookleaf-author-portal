@@ -5,65 +5,27 @@
 
 ---
 
+## 🌐 Live Demo & Repository Links
+
+- **Frontend Live Demo**: [https://bookleaf-author-portal-seven.vercel.app](https://bookleaf-author-portal-seven.vercel.app)
+- **Backend API Server**: [https://bookleaf-author-portal-5lp9.onrender.com](https://bookleaf-author-portal-5lp9.onrender.com)
+- **GitHub Repository**: [https://github.com/Umangstudent/bookleaf-author-portal](https://github.com/Umangstudent/bookleaf-author-portal)
+
+---
+
 ## 🛠️ Architecture & Tech Stack
 
-- **Frontend**: React 18 + Vite, React Router v6, Context API (`AuthContext`), pure CSS design system.
+- **Frontend**: React 18 + Vite, React Router v6, Context API (`AuthContext`), pure responsive CSS design system.
 - **Backend**: Node.js + Express REST API, Knex.js query builder, SQLite3 relational database (`backend/data/bookleaf.db`).
 - **Authentication**: JWT token-based authentication with bcrypt password hashing and role-based route guards (`author` vs `admin`).
 - **AI Integration**: Groq API (`openai/gpt-oss-120b`) via OpenAI-compatible endpoint with strict JSON schema parsing and automatic contextual NLP fallback when offline or unconfigured.
-- **Real-Time Communication**: Server-Sent Events (SSE) for near-instant message streaming without excessive client polling.
+- **Real-Time Updates**: Server-Sent Events (SSE) for near-instant message streaming without excessive client polling.
 
 ---
 
-## 📋 Prerequisites
+## 🔐 Demo Credentials (1-Click Login Available)
 
-Before running the application locally, ensure you have:
-- **Node.js**: v18.0.0 or higher
-- **npm**: v9.0.0 or higher
-- **Git** (for repository management)
-
----
-
-## ⚙️ Environment Configuration
-
-1. In the `backend/` directory, copy `.env.example` to `.env`:
-   ```bash
-   cp backend/.env.example backend/.env
-   ```
-2. Open `backend/.env` and configure your variables:
-   ```env
-   PORT=3001
-   JWT_SECRET=bookleaf-super-secret-jwt-key-2024-change-in-production
-   FRONTEND_URL=http://localhost:5173
-   GROQ_API_KEY=your_groq_api_key_here
-   NODE_ENV=development
-   ```
-   > **Note on AI Keys:** The backend supports Groq Cloud API keys (`gsk_...`). If `GROQ_API_KEY` is omitted or rate-limited, the system degrades gracefully into its built-in Contextual Knowledge Engine without crashing.
-
----
-
-## 🚀 Quick Start & Installation
-
-### 1. Backend Setup
-```bash
-cd backend
-npm install
-node src/utils/seed.js   # Seeds database with official sample dataset (authors, books, tickets)
-npm start                # Server runs on http://localhost:3001
-```
-
-### 2. Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev              # Client runs on http://localhost:5173
-```
-
----
-
-## 🔐 Demo Credentials (Pre-seeded)
-
-Use the 1-click login buttons on the login screen or enter the credentials below:
+Use the 1-click demo login buttons directly on the login screen or enter the credentials below:
 
 ### ⚡ Support Administrators
 | Role | Email | Password |
@@ -74,7 +36,7 @@ Use the 1-click login buttons on the login screen or enter the credentials below
 ### ✍️ Authors (Password for all: `password123`)
 | Author Name | Email | Scenario / Catalog Highlights |
 |---|---|---|
-| **Priya Sharma** | `priya.sharma@email.com` | 3 books, active printing & royalty queries |
+| **Priya Sharma** | `priya.sharma@email.com` | 2 books, active printing & royalty queries |
 | **Rohit Kapoor** | `rohit.kapoor@email.com` | 2 books, royalty reconciliation inquiry |
 | **Ananya Reddy** | `ananya.reddy@email.com` | 1 book, account/bank update inquiry |
 | **Vikram Joshi** | `vikram.joshi@email.com` | High-volume seller catalog |
@@ -83,7 +45,7 @@ Use the 1-click login buttons on the login screen or enter the credentials below
 
 ---
 
-## 🌟 Features Implemented
+## 🌟 Key Features Implemented
 
 ### 1. ✍️ Author Support Portal (`/author`)
 - **Author Dashboard**: Overview of lifetime royalties earned (₹), copies sold, catalog count, and quick access to open tickets.
@@ -99,6 +61,21 @@ Use the 1-click login buttons on the login screen or enter the credentials below
   - **AI Copilot (Draft Generator)**: Synthesizes responses adhering to BookLeaf policies (80/20 royalty split, quarterly payouts, reprint policies).
   - **Internal Staff Notes**: Private messages visible only to BookLeaf administrators for team handoffs.
   - **Workflow Triage**: Real-time status changes, re-prioritization, and agent assignment.
+
+---
+
+## 🤖 AI Integration Details
+
+1. **Prompt Engineering & Tone**:
+   - Prompts include the official BookLeaf Publishing Knowledge Base (80/20 royalty split, ₹1,000 threshold, 5–7 business days reprint timeline, Delhi warehouse details).
+   - Responses start with the author's first name, use empathetic language, cite exact numbers, and conclude with clear next steps.
+2. **Cost Awareness & Token Optimization**:
+   - Tickets are classified using minimal JSON prompts with strict schemas (`response_format: { type: 'json_object' }`).
+   - Draft generation transmits only the relevant book sales figures and query context rather than unneeded historic message dumps.
+3. **Graceful Degradation (Fallback Engine)**:
+   - If the Groq API key is missing, network is unavailable, or rate limits are hit, the system automatically falls back to an internal **Contextual NLP Engine** without failing the user request.
+4. **Security**:
+   - API keys are strictly kept on the backend in `.env`. They are never passed to the frontend or checked into version control.
 
 ---
 
@@ -122,35 +99,28 @@ Use the 1-click login buttons on the login screen or enter the credentials below
 
 ---
 
-## 🤖 AI Integration Details
+## 🚀 Local Quick Start & Installation
 
-1. **Prompt Engineering & Tone**:
-   - Prompts include the official BookLeaf Publishing Knowledge Base (80/20 royalty split, ₹1,000 threshold, 5–7 business days reprint timeline, Delhi warehouse details).
-   - Responses start with the author's first name, use empathetic language, cite exact numbers, and conclude with clear next steps.
-2. **Cost Awareness & Token Optimization**:
-   - Tickets are classified using minimal JSON prompts with strict schemas (`response_format: { type: 'json_object' }`).
-   - Draft generation transmits only the relevant book sales figures and query context rather than unneeded historic message dumps.
-3. **Graceful Degradation (Fallback Engine)**:
-   - If the Groq API key is missing, network is unavailable, or rate limits are hit, the system automatically falls back to an internal **Contextual NLP Engine** without failing the user request.
-4. **Security**:
-   - API keys are strictly kept on the backend in `.env`. They are never passed to the frontend or checked into version control.
+### 1. Prerequisites
+- **Node.js**: v18.0.0 or higher
+- **npm**: v9.0.0 or higher
+- **Git**
 
----
+### 2. Backend Setup
+```bash
+cd backend
+npm install
+cp .env.example .env     # Configure your GROQ_API_KEY (optional, fallback available)
+node src/utils/seed.js   # Seeds database with sample dataset (authors, books, tickets)
+npm start                # Server runs on http://localhost:3001
+```
 
-## 🚢 Deployment Guidelines
-
-The project can be deployed to any modern cloud provider (Render, Railway, Fly.io, or VPS):
-
-### Backend (e.g., Render / Railway)
-- **Build Command**: `npm install`
-- **Start Command**: `node server.js`
-- **Environment Variables**: Set `PORT`, `JWT_SECRET`, `FRONTEND_URL`, and `GROQ_API_KEY`.
-- **Database**: Ensure persistent disk volume or run `node src/utils/seed.js` during initial setup.
-
-### Frontend (e.g., Vercel / Netlify / Render Static Site)
-- **Build Command**: `npm run build`
-- **Publish Directory**: `dist`
-- **API Proxy**: Configure reverse proxy or set backend URL in Vite configuration for production routing.
+### 3. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev              # Client runs on http://localhost:5173
+```
 
 ---
 
